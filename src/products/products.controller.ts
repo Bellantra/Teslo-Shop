@@ -29,9 +29,10 @@ export class ProductsController {
     return this.productsService.findAll(paginationDto);
   }
 
+  //Cambie al findOnePlain para cambiar contenido
   @Get(':term')
   findOne(@Param('term') term: string) {
-    return this.productsService.findOne(term);
+    return this.productsService.findOnePlain(term);
   }
 
   @Patch(':id')
