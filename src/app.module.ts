@@ -1,14 +1,18 @@
+import { join } from 'path';
+import 'dotenv/config';
+
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductsModule } from './products/products.module';
 import { CommonModule } from './common/common.module';
 import { SeedModule } from './seed/seed.module';
-import 'dotenv/config';
+import { FilesModule } from './files/files.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ envFilePath: '.env', isGlobal: true }),
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DB_HOST,
@@ -20,11 +24,18 @@ import 'dotenv/config';
       synchronize: true,
     }),
 
+    //ejemplo para servir imagenes desde la carptea public directamente
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
+
     ProductsModule,
 
     CommonModule,
 
     SeedModule,
+
+    FilesModule,
   ],
 })
 export class AppModule {}
