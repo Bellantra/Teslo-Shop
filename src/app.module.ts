@@ -1,6 +1,16 @@
+import { join } from 'path';
+import 'dotenv/config';
+
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ProductsModule } from './products/products.module';
+import { CommonModule } from './common/common.module';
+import { SeedModule } from './seed/seed.module';
+import { FilesModule } from './files/files.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { AuthModule } from './auth/auth.module';
+import { MessageWsModule } from './message-ws/message-ws.module';
 
 @Module({
   imports: [
@@ -15,8 +25,23 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       autoLoadEntities: true,
       synchronize: true,
     }),
+
+    //ejemplo para servir imagenes desde la carptea public directamente
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
+
+    ProductsModule,
+
+    CommonModule,
+
+    SeedModule,
+
+    FilesModule,
+
+    AuthModule,
+
+    MessageWsModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}

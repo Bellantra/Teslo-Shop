@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Teslo WebSockets</title>
+  </head>
+  <body>
+    <h1>Prueba de Socket.IO con Nest</h1>
+    <p>Abre la consola del navegador para ver los logs.</p>
+
+    <!-- Cliente de Socket.IO desde CDN -->
+    <script
+      src="https://cdn.socket.io/4.8.1/socket.io.min.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      // Ajusta la URL si no usas localhost:3000
+      const socket = io('http://localhost:3000', {
+        transports: ['websocket'],
+      });
+
+      socket.on('connect', () => {
+        console.log('Conectado al servidor WS, id:', socket.id);
+      });
+
+      socket.on('disconnect', () => {
+        console.log('Desconectado del servidor WS');
+      });
+
+      socket.on('connect_error', (err) => {
+        console.error('Error de conexión:', err.message);
+      });
+    </script>
+  </body>
+</html>
